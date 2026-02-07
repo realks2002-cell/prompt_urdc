@@ -1,0 +1,52 @@
+import { NextResponse } from "next/server";
+import { readMcps, writeMcps } from "@/lib/mcps-store";
+import type { Prompt } from "@/types/prompt";
+
+type RouteParams = { params: Promise<{ id: string }> };
+
+export async function GET(_request: Request, { params }: RouteParams) {
+  const { id } = await params;
+  const items = await readMcps();
+  const found = items.find((p) => p.id === id);
+  if (!found) return NextResponse.json({ error: "찾을 수 없음" }, { status: 404 });
+  return NextResponse.json(found);
+}
+
+export async function PUT(request: Request, { params }: RouteParams) {
+  try {
+    const { id } = await params;
+    const body = (await request.json()) as Partial<Prompt>;
+    const items = await readMcps();
+    const index = items.findIndex((p) => p.id === id);
+    if (index === -1) return NextResponse.json({ error: "찾을 수 없음" }, { status: 404 });
+    const current = items[index];
+    const updated: Prompt = {
+      ...current,
+      title: body.title?.trim() ?? current.title,
+      description: body.description !== undefined ? body.description.trim() : current.description,
+      role: body.role?.trim() ?? current.role,
+      task: body.task?.trim() ?? current.task,
+      domain: body.domain?.trim() ?? current.domain,
+      constraint: body.constraint?.trim() ?? current.constraint,
+      updatedAt: new Date().toISOString(),
+    };
+    items[index] = updated;
+    await writeMcps(items);
+    return NextResponse.json(updated);
+  } catch {
+    return NextResponse.json({ error: "수정 실패" }, { status: 500 });
+  }
+}
+
+export async function DELETE(_request: Request, { params }: RouteParams) {
+  try {
+    const { id } = await params;
+    const items = await readMcps();
+    const filtered = items.filter((p) => p.id !== id);
+    if (filtered.length === items.length) return NextResponse.json({ error: "찾을 수 없음" }, { status: 404 });
+    await writeMcps(filtered);
+    return NextResponse.json({ ok: true });
+  } catch {
+    return NextResponse.json({ error: "삭제 실패" }, { status: 500 });
+  }
+}
