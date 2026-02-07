@@ -24,4 +24,6 @@ npm start
 
 ## 데이터
 
-프롬프트 데이터는 프로젝트 루트의 `data/prompts.json`에 저장됩니다. 서버를 재시작해도 유지됩니다.
+- **로컬**: 프로젝트 루트의 `data/prompts.json`, `data/agents.json`, `data/mcps.json`에 JSON으로 저장됩니다.
+- **Vercel 배포**: 환경 변수 `BLOB_READ_WRITE_TOKEN`을 설정하면 [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)에 자동으로 저장됩니다.  
+  Vercel 대시보드 → 프로젝트 → Storage → Blob 생성 후, 생성된 토큰을 Environment Variables에 `BLOB_READ_WRITE_TOKEN`으로 추가하세요.
