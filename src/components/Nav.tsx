@@ -8,6 +8,7 @@ const items = [
   { href: "/prompt", label: "Prompt" },
   { href: "/agent", label: "Agent" },
   { href: "/mcp", label: "MCP" },
+  { href: "/project", label: "Project" },
 ] as const;
 
 export function Nav() {
