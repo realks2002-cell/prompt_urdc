@@ -23,9 +23,14 @@ export async function POST(request: Request) {
     projects.push(newProject);
     await writeProjects(projects);
     return NextResponse.json(newProject);
+<<<<<<< HEAD
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : "저장 실패";
     console.error("Project 저장 실패:", e);
     return NextResponse.json({ error: errorMessage }, { status: 500 });
+=======
+  } catch {
+    return NextResponse.json({ error: "저장 실패" }, { status: 500 });
+>>>>>>> c44cb223a1d60b812ffb517ae546240da1ded56f
   }
 }

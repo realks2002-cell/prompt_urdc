@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { existsSync } from "fs";
+=======
+import { readFile, writeFile } from "fs/promises";
+>>>>>>> c44cb223a1d60b812ffb517ae546240da1ded56f
 import path from "path";
 import type { Prompt } from "@/types/prompt";
 import { readBlobJson, writeBlobJson } from "@/lib/blob-store";
@@ -12,6 +16,7 @@ function useBlob(): boolean {
   return typeof process.env.BLOB_READ_WRITE_TOKEN === "string" && process.env.BLOB_READ_WRITE_TOKEN.length > 0;
 }
 
+<<<<<<< HEAD
 /** data 디렉토리가 없으면 생성 */
 async function ensureDataDir(): Promise<void> {
   if (!existsSync(DATA_DIR)) {
@@ -19,6 +24,8 @@ async function ensureDataDir(): Promise<void> {
   }
 }
 
+=======
+>>>>>>> c44cb223a1d60b812ffb517ae546240da1ded56f
 export async function readAgents(): Promise<Prompt[]> {
   if (useBlob()) {
     const data = await readBlobJson<Prompt[]>(BLOB_PATH);
@@ -38,6 +45,9 @@ export async function writeAgents(items: Prompt[]): Promise<void> {
     await writeBlobJson(BLOB_PATH, items);
     return;
   }
+<<<<<<< HEAD
   await ensureDataDir();
+=======
+>>>>>>> c44cb223a1d60b812ffb517ae546240da1ded56f
   await writeFile(FILE_PATH, JSON.stringify(items, null, 2), "utf-8");
 }

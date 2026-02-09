@@ -30,9 +30,14 @@ export async function POST(request: Request) {
     items.push(newItem);
     await writeMcps(items);
     return NextResponse.json(newItem);
+<<<<<<< HEAD
   } catch (e) {
     const errorMessage = e instanceof Error ? e.message : "저장 실패";
     console.error("MCP 저장 실패:", e);
     return NextResponse.json({ error: errorMessage }, { status: 500 });
+=======
+  } catch {
+    return NextResponse.json({ error: "저장 실패" }, { status: 500 });
+>>>>>>> c44cb223a1d60b812ffb517ae546240da1ded56f
   }
 }

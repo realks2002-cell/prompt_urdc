@@ -36,8 +36,12 @@ export async function POST(request: Request) {
     await writePrompts(prompts);
     return NextResponse.json(newPrompt);
   } catch (e) {
+<<<<<<< HEAD
     const errorMessage = e instanceof Error ? e.message : "저장 실패";
     console.error("Prompt 저장 실패:", e);
     return NextResponse.json({ error: errorMessage }, { status: 500 });
+=======
+    return NextResponse.json({ error: "저장 실패" }, { status: 500 });
+>>>>>>> c44cb223a1d60b812ffb517ae546240da1ded56f
   }
 }
