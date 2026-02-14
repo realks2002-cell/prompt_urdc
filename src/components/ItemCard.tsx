@@ -61,9 +61,9 @@ export function ItemCard({ item, apiBase, itemLabel, onUpdated, onDeleted, varia
             <CardTitle className={`break-words ${isList ? "text-sm font-medium" : "text-base"}`}>
               {item.title}
             </CardTitle>
-            {isList && (item.description?.trim() || item.task?.trim()) && (
+            {isList && item.task?.trim() && (
               <p className="mt-0.5 truncate text-muted-foreground text-xs">
-                {item.description?.trim() || item.task?.trim()}
+                {item.task?.trim()}
               </p>
             )}
           </div>
@@ -81,12 +81,6 @@ export function ItemCard({ item, apiBase, itemLabel, onUpdated, onDeleted, varia
         </CardHeader>
         {!isList && (
           <CardContent className="space-y-3 text-sm">
-            {item.description?.trim() && (
-              <div>
-                <span className="font-medium text-muted-foreground">메모</span>
-                <p className="mt-0.5 break-words">{item.description}</p>
-              </div>
-            )}
             <div>
               <span className="font-medium text-muted-foreground">내용</span>
               <p className="mt-0.5 break-words whitespace-pre-wrap">{item.task || "—"}</p>
