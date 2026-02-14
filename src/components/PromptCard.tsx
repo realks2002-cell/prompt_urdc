@@ -59,9 +59,9 @@ export function PromptCard({ prompt, onUpdated, onDeleted, variant = "card" }: P
             <CardTitle className={`break-words ${isList ? "text-sm font-medium" : "text-base"}`}>
               {prompt.title}
             </CardTitle>
-            {isList && (prompt.description?.trim() || prompt.task?.trim()) && (
+            {isList && prompt.task?.trim() && (
               <p className="mt-0.5 truncate text-muted-foreground text-xs">
-                {prompt.description?.trim() || prompt.task?.trim()}
+                {prompt.task?.trim()}
               </p>
             )}
           </div>
@@ -97,12 +97,6 @@ export function PromptCard({ prompt, onUpdated, onDeleted, variant = "card" }: P
         </CardHeader>
         {!isList && (
           <CardContent className="space-y-3 text-sm">
-            {prompt.description?.trim() && (
-              <div>
-                <span className="font-medium text-muted-foreground">메모</span>
-                <p className="mt-0.5 break-words">{prompt.description}</p>
-              </div>
-            )}
             <div>
               <span className="font-medium text-muted-foreground">내용</span>
               <p className="mt-0.5 break-words whitespace-pre-wrap">{prompt.task || "—"}</p>
