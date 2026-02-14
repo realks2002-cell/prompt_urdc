@@ -9,7 +9,6 @@ import type { Prompt } from "@/types/prompt";
 
 const defaultValues = {
   title: "",
-  description: "",
   task: "",
 };
 
@@ -34,7 +33,6 @@ export function ItemForm({
     initial
       ? {
           title: initial.title,
-          description: initial.description ?? "",
           task: initial.task,
         }
       : defaultValues
@@ -116,18 +114,6 @@ export function ItemForm({
           rows={6}
           className="min-h-[120px] w-full font-mono text-sm"
           aria-label="내용"
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="item-desc">메모 (선택)</Label>
-        <Textarea
-          id="item-desc"
-          value={form.description}
-          onChange={(e) => update("description", e.target.value)}
-          placeholder="용도·출처 등 짧은 메모"
-          rows={2}
-          className="min-h-[44px] w-full"
-          aria-label="메모"
         />
       </div>
       {error && (

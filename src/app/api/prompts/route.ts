@@ -12,7 +12,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Omit<Prompt, "id" | "createdAt" | "updatedAt">;
-    const { title, description, task } = body;
+    const { title, task } = body;
     if (!title?.trim()) {
       return NextResponse.json(
         { error: "제목은 필수입니다." },
@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     const newPrompt: Prompt = {
       id: crypto.randomUUID(),
       title: title.trim(),
-      description: description?.trim() ?? "",
       task: task?.trim() ?? "",
       createdAt: now,
       updatedAt: now,

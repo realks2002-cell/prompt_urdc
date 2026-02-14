@@ -23,7 +23,6 @@ export async function PUT(request: Request, { params }: RouteParams) {
     const updated: Prompt = {
       ...current,
       title: body.title?.trim() ?? current.title,
-      description: body.description !== undefined ? body.description.trim() : current.description,
       task: body.task?.trim() ?? current.task,
       updatedAt: new Date().toISOString(),
     };

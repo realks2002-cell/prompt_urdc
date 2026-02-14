@@ -2,7 +2,6 @@
 export interface Prompt {
   id: string;
   title: string;
-  description?: string;
   /** 프롬프트 내용 */
   task: string;
   createdAt: string;
