@@ -6,20 +6,8 @@ export function promptToMarkdown(prompt: Prompt): string {
     `# ${prompt.title}`,
     "",
   ];
-  if (prompt.description?.trim()) {
-    lines.push(prompt.description.trim(), "");
-  }
-  if (prompt.role?.trim()) {
-    lines.push("## 역할 (U)", "", prompt.role.trim(), "");
-  }
   if (prompt.task?.trim()) {
-    lines.push("## 과제 (R)", "", prompt.task.trim(), "");
-  }
-  if (prompt.domain?.trim()) {
-    lines.push("## 도메인 (D)", "", prompt.domain.trim(), "");
-  }
-  if (prompt.constraint?.trim()) {
-    lines.push("## 제약 (C)", "", prompt.constraint.trim(), "");
+    lines.push(prompt.task.trim(), "");
   }
   return lines.join("\n").trimEnd();
 }
