@@ -24,10 +24,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
       ...current,
       title: body.title?.trim() ?? current.title,
       description: body.description !== undefined ? body.description.trim() : current.description,
-      role: body.role?.trim() ?? current.role,
       task: body.task?.trim() ?? current.task,
-      domain: body.domain?.trim() ?? current.domain,
-      constraint: body.constraint?.trim() ?? current.constraint,
       updatedAt: new Date().toISOString(),
     };
     items[index] = updated;

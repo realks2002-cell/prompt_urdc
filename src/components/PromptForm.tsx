@@ -10,10 +10,7 @@ import type { Prompt } from "@/types/prompt";
 const defaultValues = {
   title: "",
   description: "",
-  role: "",
   task: "",
-  domain: "",
-  constraint: "",
 };
 
 interface PromptFormProps {
@@ -34,10 +31,7 @@ export function PromptForm({
       ? {
           title: initial.title,
           description: initial.description ?? "",
-          role: initial.role,
           task: initial.task,
-          domain: initial.domain,
-          constraint: initial.constraint,
         }
       : defaultValues
   );
@@ -58,10 +52,6 @@ export function PromptForm({
     const isEdit = !!initial;
     if (!form.title.trim()) {
       setError("제목을 입력해 주세요.");
-      return;
-    }
-    if (isEdit && (!form.role.trim() || !form.task.trim() || !form.domain.trim() || !form.constraint.trim())) {
-      setError("역할, 과제, 도메인, 제약을 모두 입력해 주세요.");
       return;
     }
     setLoading(true);
@@ -112,90 +102,30 @@ export function PromptForm({
           autoComplete="off"
         />
       </div>
-      {/* 새 프롬프트 추가 시: 프롬프트 내용 입력창 (과제 R에 저장) */}
-      {!initial && (
-        <div className="space-y-2">
-          <Label htmlFor="prompt-task-add">프롬프트 내용 (선택)</Label>
-          <Textarea
-            id="prompt-task-add"
-            value={form.task}
-            onChange={(e) => update("task", e.target.value)}
-            placeholder="프롬프트를 입력하거나 붙여넣으세요"
-            rows={6}
-            className="min-h-[120px] w-full font-mono text-sm"
-            aria-label="프롬프트 내용"
-          />
-        </div>
-      )}
       <div className="space-y-2">
-        <Label htmlFor="prompt-desc">{initial ? "설명 (선택)" : "메모 (선택)"}</Label>
+        <Label htmlFor="prompt-task">프롬프트 내용</Label>
+        <Textarea
+          id="prompt-task"
+          value={form.task}
+          onChange={(e) => update("task", e.target.value)}
+          placeholder="프롬프트를 입력하거나 붙여넣으세요"
+          rows={6}
+          className="min-h-[120px] w-full font-mono text-sm"
+          aria-label="프롬프트 내용"
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="prompt-desc">메모 (선택)</Label>
         <Textarea
           id="prompt-desc"
           value={form.description}
           onChange={(e) => update("description", e.target.value)}
-          placeholder={initial ? "간단한 설명" : "용도·출처 등 짧은 메모"}
+          placeholder="용도·출처 등 짧은 메모"
           rows={2}
           className="min-h-[44px] w-full"
-          aria-label="설명 또는 메모"
+          aria-label="메모"
         />
       </div>
-      {/* 수정 시에만 URDC 필드 표시 */}
-      {initial && (
-        <>
-          <div className="space-y-2">
-            <Label htmlFor="prompt-role">역할 (U)</Label>
-            <Textarea
-              id="prompt-role"
-              value={form.role}
-              onChange={(e) => update("role", e.target.value)}
-              placeholder="AI의 역할"
-              required
-              aria-required="true"
-              rows={2}
-              className="min-h-[44px]"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="prompt-task">과제 (R)</Label>
-            <Textarea
-              id="prompt-task"
-              value={form.task}
-              onChange={(e) => update("task", e.target.value)}
-              placeholder="요청할 작업"
-              required
-              aria-required="true"
-              rows={2}
-              className="min-h-[44px]"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="prompt-domain">도메인 (D)</Label>
-            <Textarea
-              id="prompt-domain"
-              value={form.domain}
-              onChange={(e) => update("domain", e.target.value)}
-              placeholder="도메인/분야"
-              required
-              aria-required="true"
-              rows={2}
-              className="min-h-[44px]"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="prompt-constraint">제약 (C)</Label>
-            <Textarea
-              id="prompt-constraint"
-              value={form.constraint}
-              onChange={(e) => update("constraint", e.target.value)}
-              placeholder="제약 조건"
-              required
-              aria-required="true"
-              rows={2}
-              className="min-h-[44px]"
-            />
-          </div>
-        </>
-      )}
       {error && (
         <p role="alert" className="text-destructive text-sm">
           {error}

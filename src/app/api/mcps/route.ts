@@ -10,7 +10,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as Omit<Prompt, "id" | "createdAt" | "updatedAt">;
-    const { title, description, role, task, domain, constraint } = body;
+    const { title, description, task } = body;
     if (!title?.trim()) {
       return NextResponse.json({ error: "제목은 필수입니다." }, { status: 400 });
     }
@@ -20,10 +20,7 @@ export async function POST(request: Request) {
       id: crypto.randomUUID(),
       title: title.trim(),
       description: description?.trim() ?? "",
-      role: role?.trim() ?? "",
       task: task?.trim() ?? "",
-      domain: domain?.trim() ?? "",
-      constraint: constraint?.trim() ?? "",
       createdAt: now,
       updatedAt: now,
     };

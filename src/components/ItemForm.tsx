@@ -10,10 +10,7 @@ import type { Prompt } from "@/types/prompt";
 const defaultValues = {
   title: "",
   description: "",
-  role: "",
   task: "",
-  domain: "",
-  constraint: "",
 };
 
 interface ItemFormProps {
@@ -38,10 +35,7 @@ export function ItemForm({
       ? {
           title: initial.title,
           description: initial.description ?? "",
-          role: initial.role,
           task: initial.task,
-          domain: initial.domain,
-          constraint: initial.constraint,
         }
       : defaultValues
   );
@@ -62,10 +56,6 @@ export function ItemForm({
     const isEdit = !!initial;
     if (!form.title.trim()) {
       setError("제목을 입력해 주세요.");
-      return;
-    }
-    if (isEdit && (!form.role.trim() || !form.task.trim() || !form.domain.trim() || !form.constraint.trim())) {
-      setError("역할, 과제, 도메인, 제약을 모두 입력해 주세요.");
       return;
     }
     setLoading(true);
@@ -116,52 +106,30 @@ export function ItemForm({
           autoComplete="off"
         />
       </div>
-      {!initial && (
-        <div className="space-y-2">
-          <Label htmlFor="item-task-add">내용 (선택)</Label>
-          <Textarea
-            id="item-task-add"
-            value={form.task}
-            onChange={(e) => update("task", e.target.value)}
-            placeholder="내용을 입력하거나 붙여넣으세요"
-            rows={6}
-            className="min-h-[120px] w-full font-mono text-sm"
-            aria-label="내용"
-          />
-        </div>
-      )}
       <div className="space-y-2">
-        <Label htmlFor="item-desc">{initial ? "설명 (선택)" : "메모 (선택)"}</Label>
+        <Label htmlFor="item-task">내용</Label>
+        <Textarea
+          id="item-task"
+          value={form.task}
+          onChange={(e) => update("task", e.target.value)}
+          placeholder="내용을 입력하거나 붙여넣으세요"
+          rows={6}
+          className="min-h-[120px] w-full font-mono text-sm"
+          aria-label="내용"
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="item-desc">메모 (선택)</Label>
         <Textarea
           id="item-desc"
           value={form.description}
           onChange={(e) => update("description", e.target.value)}
-          placeholder={initial ? "간단한 설명" : "용도·출처 등 짧은 메모"}
+          placeholder="용도·출처 등 짧은 메모"
           rows={2}
           className="min-h-[44px] w-full"
-          aria-label="설명 또는 메모"
+          aria-label="메모"
         />
       </div>
-      {initial && (
-        <>
-          <div className="space-y-2">
-            <Label htmlFor="item-role">역할 (U)</Label>
-            <Textarea id="item-role" value={form.role} onChange={(e) => update("role", e.target.value)} placeholder="AI의 역할" required aria-required="true" rows={2} className="min-h-[44px] w-full" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="item-task">과제 (R)</Label>
-            <Textarea id="item-task" value={form.task} onChange={(e) => update("task", e.target.value)} placeholder="요청할 작업" required aria-required="true" rows={2} className="min-h-[44px] w-full" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="item-domain">도메인 (D)</Label>
-            <Textarea id="item-domain" value={form.domain} onChange={(e) => update("domain", e.target.value)} placeholder="도메인/분야" required aria-required="true" rows={2} className="min-h-[44px] w-full" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="item-constraint">제약 (C)</Label>
-            <Textarea id="item-constraint" value={form.constraint} onChange={(e) => update("constraint", e.target.value)} placeholder="제약 조건" required aria-required="true" rows={2} className="min-h-[44px] w-full" />
-          </div>
-        </>
-      )}
       {error && (
         <p role="alert" className="text-destructive text-sm">
           {error}
