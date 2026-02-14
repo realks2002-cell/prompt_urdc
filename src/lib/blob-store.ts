@@ -11,6 +11,7 @@ export async function writeBlobJson(pathname: string, data: unknown): Promise<vo
     await put(key, JSON.stringify(data, null, 2), {
       access: "public",
       addRandomSuffix: false,
+      allowOverwrite: true,
     });
     console.log(`[Blob] 저장 성공: ${key}`);
   } catch (error) {
