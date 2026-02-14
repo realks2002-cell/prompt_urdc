@@ -32,9 +32,12 @@ export async function PUT(request: Request, { params }: RouteParams) {
     };
     items[index] = updated;
     await writeMcps(items);
+    console.log(`[API] MCP 수정 성공: ${id}`);
     return NextResponse.json(updated);
-  } catch {
-    return NextResponse.json({ error: "수정 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] MCP 수정 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "수정 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -45,8 +48,11 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
     const filtered = items.filter((p) => p.id !== id);
     if (filtered.length === items.length) return NextResponse.json({ error: "찾을 수 없음" }, { status: 404 });
     await writeMcps(filtered);
+    console.log(`[API] MCP 삭제 성공: ${id}`);
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "삭제 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] MCP 삭제 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "삭제 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

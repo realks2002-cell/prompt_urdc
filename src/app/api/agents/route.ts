@@ -29,8 +29,11 @@ export async function POST(request: Request) {
     };
     items.push(newItem);
     await writeAgents(items);
+    console.log(`[API] Agent 생성 성공: ${newItem.id}`);
     return NextResponse.json(newItem);
-  } catch {
-    return NextResponse.json({ error: "저장 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] Agent 생성 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "저장 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -25,5 +25,17 @@ npm start
 ## 데이터
 
 - **로컬**: 프로젝트 루트의 `data/prompts.json`, `data/agents.json`, `data/mcps.json`에 JSON으로 저장됩니다.
-- **Vercel 배포**: 환경 변수 `BLOB_READ_WRITE_TOKEN`을 설정하면 [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)에 자동으로 저장됩니다.  
-  Vercel 대시보드 → 프로젝트 → Storage → Blob 생성 후, 생성된 토큰을 Environment Variables에 `BLOB_READ_WRITE_TOKEN`으로 추가하세요.
+- **Vercel 배포**: 환경 변수 `BLOB_READ_WRITE_TOKEN`을 설정하면 [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)에 자동으로 저장됩니다.
+
+## Vercel 배포
+
+**⚡ 빠른 시작**: [QUICK_DEPLOY.md](QUICK_DEPLOY.md) (5분 완성)
+**📖 상세 가이드**: [VERCEL_SETUP.md](VERCEL_SETUP.md)
+
+### 요약
+1. GitHub에 푸시
+2. Vercel에 배포
+3. Storage → Blob 생성
+4. 재배포
+
+**중요**: Blob Storage를 생성하지 않으면 Vercel에서 저장이 작동하지 않습니다.

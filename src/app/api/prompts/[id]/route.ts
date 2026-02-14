@@ -35,9 +35,12 @@ export async function PUT(request: Request, { params }: RouteParams) {
     };
     prompts[index] = updated;
     await writePrompts(prompts);
+    console.log(`[API] 프롬프트 수정 성공: ${id}`);
     return NextResponse.json(updated);
-  } catch {
-    return NextResponse.json({ error: "수정 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] 프롬프트 수정 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "수정 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -51,8 +54,11 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
       return NextResponse.json({ error: "찾을 수 없음" }, { status: 404 });
     }
     await writePrompts(filtered);
+    console.log(`[API] 프롬프트 삭제 성공: ${id}`);
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "삭제 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] 프롬프트 삭제 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "삭제 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

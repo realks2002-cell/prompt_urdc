@@ -28,9 +28,12 @@ export async function PUT(request: Request, { params }: RouteParams) {
     };
     projects[index] = updated;
     await writeProjects(projects);
+    console.log(`[API] Project 수정 성공: ${id}`);
     return NextResponse.json(updated);
-  } catch {
-    return NextResponse.json({ error: "수정 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] Project 수정 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "수정 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -41,8 +44,11 @@ export async function DELETE(_request: Request, { params }: RouteParams) {
     const filtered = projects.filter((p) => p.id !== id);
     if (filtered.length === projects.length) return NextResponse.json({ error: "찾을 수 없음" }, { status: 404 });
     await writeProjects(filtered);
+    console.log(`[API] Project 삭제 성공: ${id}`);
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "삭제 실패" }, { status: 500 });
+  } catch (e) {
+    console.error("[API] Project 삭제 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "삭제 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

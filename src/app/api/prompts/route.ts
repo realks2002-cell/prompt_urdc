@@ -34,8 +34,11 @@ export async function POST(request: Request) {
     };
     prompts.push(newPrompt);
     await writePrompts(prompts);
+    console.log(`[API] 프롬프트 생성 성공: ${newPrompt.id}`);
     return NextResponse.json(newPrompt);
   } catch (e) {
-    return NextResponse.json({ error: "저장 실패" }, { status: 500 });
+    console.error("[API] 프롬프트 생성 실패:", e);
+    const errorMessage = e instanceof Error ? e.message : "저장 실패";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
